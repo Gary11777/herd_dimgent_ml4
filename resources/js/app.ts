@@ -3,9 +3,19 @@ import { initializeTheme } from '@/composables/useAppearance';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
+import SiteLayout from '@/layouts/SiteLayout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+const sitePages = [
+    'Home',
+    'Products',
+    'Services',
+    'Projects',
+    'Contacts',
+    'About',
+];
 
 void createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
@@ -13,6 +23,8 @@ void createInertiaApp({
         switch (true) {
             case name === 'Welcome':
                 return null;
+            case sitePages.includes(name):
+                return SiteLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):
